@@ -2,7 +2,7 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
+  --background: #f3f4f6; /* changed to neutral-100 to match app background and remove white gaps */
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
   --card-foreground: oklch(0.145 0 0);
@@ -124,8 +124,17 @@
     @apply border-border outline-ring/50;
   }
 
+  /* Ensure the app fills the full viewport and remove default body margins */
+  html, body, #root {
+    height: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /**
@@ -178,4 +187,55 @@
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
   }
+}
+
+/* Soft border theme for improved readability */
+.soft-borders {
+  --soft-border-color: rgba(0,0,0,0.12);
+  --soft-border-width: 1px;
+  --soft-radius: 0.5rem;
+  --soft-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* Apply softer borders to common patterns inside the soft-borders scope */
+.soft-borders .border-2,
+.soft-borders .border-4,
+.soft-borders [class*="border-"] {
+  border-color: var(--soft-border-color) !important;
+  border-width: var(--soft-border-width) !important;
+}
+
+.soft-borders .rounded,
+.soft-borders .rounded-md,
+.soft-borders .rounded-lg,
+.soft-borders .rounded-full {
+  border-radius: var(--soft-radius) !important;
+}
+
+.soft-borders .shadow-xl,
+.soft-borders .shadow-lg,
+.soft-borders .shadow-md {
+  box-shadow: var(--soft-shadow) !important;
+}
+
+/* Slightly increase spacing and improve contrast for headings */
+.soft-borders h1 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  letter-spacing: -0.01em;
+}
+
+.soft-borders .p-4 {
+  padding: 1rem !important;
+}
+
+/* Make main full-width wrappers truly edge-to-edge inside soft-borders */
+.soft-borders > .w-full.h-full,
+.soft-borders > .w-full.h-full > .w-full.h-full {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* Prevent horizontal scroll when forcing full-bleed */
+body {
+  overflow-x: hidden;
 }

@@ -1,3 +1,5 @@
+import { BackButton } from '../ui/BackButton';
+
 interface ServiceSelectionProps {
   onNext: (service: string) => void;
   onBack?: () => void;
@@ -16,9 +18,7 @@ export function ServiceSelection({ onNext, onBack }: ServiceSelectionProps) {
       {/* Header */}
       <div className="border-b-2 border-neutral-800 p-4">
         <div className="flex items-center gap-3">
-            <button onClick={onBack} className="w-8 h-8 border-2 border-neutral-800 flex items-center justify-center">
-                ←
-            </button>
+          {onBack ? <BackButton onClick={onBack} /> : <div className="w-8" />}
           <h1 className="font-bold flex-1 text-center">Selecione o Serviço</h1>
           <div className="w-8" />
         </div>

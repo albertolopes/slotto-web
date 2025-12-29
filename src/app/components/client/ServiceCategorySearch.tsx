@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { BackButton } from '../ui/BackButton';
 
 interface ServiceCategorySearchProps {
   onSelectCategory: (category: string) => void;
+  onBack?: () => void;
 }
 
-export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearchProps) {
+export function ServiceCategorySearch({ onSelectCategory, onBack }: ServiceCategorySearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const categories = [
@@ -26,8 +28,12 @@ export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearc
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="border-b-2 border-neutral-800 p-4">
-        <div className="text-center mb-4">
-          <h1 className="font-bold">O que você procura?</h1>
+        <div className="flex items-center gap-3 mb-4">
+          {onBack ? <BackButton onClick={onBack} /> : <div className="w-8" />}
+          <div className="text-center flex-1">
+            <h1 className="font-bold">O que você procura?</h1>
+          </div>
+          <div className="w-8" />
         </div>
 
         {/* Search Bar */}

@@ -6,7 +6,8 @@ export default function App() {
   const [viewMode, setViewMode] = useState<'client' | 'company'>('client');
 
   return (
-    <div className="min-h-screen bg-neutral-100">
+    // Full-viewport root container
+    <div className="min-h-screen h-screen w-screen bg-neutral-100 flex flex-col">
       {/* View Switcher */}
       <div className="fixed top-4 right-4 z-50 flex gap-2">
         <button
@@ -27,8 +28,10 @@ export default function App() {
         </button>
       </div>
 
-      {/* Content */}
-      {viewMode === 'client' ? <ClientFlow /> : <CompanyFlow />}
+      {/* Content fills the remaining space */}
+      <div className="flex-1 w-full h-full">
+        {viewMode === 'client' ? <ClientFlow /> : <CompanyFlow />}
+      </div>
     </div>
   );
 }

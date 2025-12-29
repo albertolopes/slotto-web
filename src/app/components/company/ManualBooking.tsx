@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BackButton } from '../ui/BackButton';
 
 interface ManualBookingProps {
   onBack: () => void;
@@ -21,20 +22,19 @@ export function ManualBooking({ onBack }: ManualBookingProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b-2 border-neutral-800 p-6">
-        <div className="flex items-center gap-4">
-          <button onClick={onBack} className="w-12 h-12 border-2 border-neutral-800 flex items-center justify-center">
-            ←
-          </button>
-          <h1 className="font-bold flex-1">Criar Agendamento Manual</h1>
+      <div className="border-b-2 border-neutral-800 p-4">
+        <div className="flex items-center gap-3">
+          <BackButton onClick={onBack} />
+          <h1 className="font-bold flex-1 text-center">Agendamento Manual</h1>
+          <div className="w-8" />
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto p-6">
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-6">
+      <div className="flex-1 overflow-auto p-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
           {/* Client Info */}
-          <div className="border-2 border-neutral-800 p-6">
+          <div className="border-2 border-neutral-800 p-4">
             <div className="font-bold mb-4 pb-4 border-b-2 border-neutral-300">Dados do Cliente</div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -61,7 +61,7 @@ export function ManualBooking({ onBack }: ManualBookingProps) {
           </div>
 
           {/* Service Info */}
-          <div className="border-2 border-neutral-800 p-6">
+          <div className="border-2 border-neutral-800 p-4">
             <div className="font-bold mb-4 pb-4 border-b-2 border-neutral-300">Serviço e Profissional</div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -96,7 +96,7 @@ export function ManualBooking({ onBack }: ManualBookingProps) {
           </div>
 
           {/* Date & Time */}
-          <div className="border-2 border-neutral-800 p-6">
+          <div className="border-2 border-neutral-800 p-4">
             <div className="font-bold mb-4 pb-4 border-b-2 border-neutral-300">Data e Horário</div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -138,28 +138,19 @@ export function ManualBooking({ onBack }: ManualBookingProps) {
           </div>
 
           {/* Notes */}
-          <div className="border-2 border-neutral-800 p-6">
+          <div className="border-2 border-neutral-800 p-4">
             <div className="font-bold mb-4 pb-4 border-b-2 border-neutral-300">Observações</div>
             <textarea
               className="w-full border-2 border-neutral-800 p-3 bg-white min-h-[100px]"
               placeholder="Adicione observações sobre o agendamento..."
             />
           </div>
-
-          {/* Actions */}
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              type="button"
-              onClick={onBack}
-              className="h-12 border-2 border-neutral-800 bg-white font-bold"
-            >
-              Cancelar
-            </button>
-            <button type="submit" className="h-12 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">
-              Criar Agendamento
-            </button>
-          </div>
         </form>
+      </div>
+
+      {/* Actions */}
+      <div className="border-t-2 border-neutral-800 p-4">
+        <button className="w-full h-12 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">Salvar</button>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { BackButton } from '../ui/BackButton';
+
 interface MyBookingsProps {
   onBack: () => void;
 }
@@ -35,9 +37,7 @@ export function MyBookings({ onBack }: MyBookingsProps) {
       {/* Header */}
       <div className="border-b-2 border-neutral-800 p-4">
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="w-8 h-8 border-2 border-neutral-800 flex items-center justify-center">
-            ←
-          </button>
+          <BackButton onClick={onBack} />
           <h1 className="font-bold flex-1 text-center">Meus Agendamentos</h1>
           <div className="w-8"></div>
         </div>

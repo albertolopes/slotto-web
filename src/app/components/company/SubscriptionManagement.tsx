@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BackButton } from '../ui/BackButton';
 
 interface SubscriptionManagementProps {
   onBack: () => void;
@@ -48,10 +49,8 @@ export function SubscriptionManagement({ onBack }: SubscriptionManagementProps) 
       {/* Header */}
       <div className="border-b-2 border-neutral-800 p-6 bg-neutral-100">
         <div className="flex items-center gap-4">
-          <button onClick={onBack} className="w-10 h-10 border-2 border-neutral-800 flex items-center justify-center">
-            ←
-          </button>
-          <h1 className="font-bold">Gerenciar Assinatura</h1>
+          <BackButton onClick={onBack} />
+          <h1 className="font-bold flex-1 text-center">Assinatura</h1>
         </div>
       </div>
 

@@ -1,3 +1,5 @@
+import { BackButton } from '../ui/BackButton';
+
 interface CompanyDetailProps {
   companyId: string;
   onBookService: () => void;
@@ -36,12 +38,9 @@ export function CompanyDetail({ companyId, onBookService, onBack }: CompanyDetai
         <div className="w-full h-48 md:h-64 lg:h-80 border-b-2 border-neutral-800 bg-neutral-300 flex items-center justify-center">
           <span className="text-neutral-600">FOTO PRINCIPAL</span>
         </div>
-        <button
-          onClick={onBack}
-          className="absolute top-4 left-4 w-10 h-10 border-2 border-neutral-800 bg-white flex items-center justify-center"
-        >
-          ←
-        </button>
+        <div className="absolute top-4 left-4">
+          <BackButton onClick={onBack} />
+        </div>
       </div>
 
       {/* Content */}

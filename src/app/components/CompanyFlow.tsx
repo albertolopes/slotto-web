@@ -24,9 +24,9 @@ export function CompanyFlow() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-100">
+    <div className="min-h-full w-full bg-neutral-100 flex flex-col soft-borders">
       {/* Full-bleed Desktop Frame */}
-      <div className="w-full bg-white border-4 border-neutral-800 shadow-xl min-h-screen overflow-auto">
+      <div className="w-full h-full bg-neutral-100 shadow-none overflow-auto flex flex-col">
         {!isLoggedIn ? (
           <CompanyLogin onLogin={handleLogin} />
         ) : (

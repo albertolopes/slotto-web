@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BackButton } from '../ui/BackButton';
 
 interface CompanySettingsProps {
   onBack: () => void;
@@ -13,17 +14,16 @@ export function CompanySettings({ onBack, onManageSubscription }: CompanySetting
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b-2 border-neutral-800 p-6">
-        <div className="flex items-center gap-4">
-          <button onClick={onBack} className="w-12 h-12 border-2 border-neutral-800 flex items-center justify-center">
-            ←
-          </button>
-          <h1 className="font-bold flex-1">Configurações</h1>
+      <div className="border-b-2 border-neutral-800 p-4">
+        <div className="flex items-center gap-3">
+          <BackButton onClick={onBack} />
+          <h1 className="font-bold flex-1 text-center">Configurações</h1>
+          <div className="w-8" />
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 overflow-auto p-4">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Subscription Section */}
           <div className="border-2 border-neutral-800 p-6 bg-neutral-50">
@@ -141,12 +141,14 @@ export function CompanySettings({ onBack, onManageSubscription }: CompanySetting
               ))}
             </div>
           </div>
-
-          {/* Save Button */}
-          <button className="w-full h-12 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">
-            Salvar Alterações
-          </button>
         </div>
+      </div>
+
+      {/* Save Button */}
+      <div className="border-t-2 border-neutral-800 p-4">
+        <button className="w-full h-12 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">
+          Salvar Alterações
+        </button>
       </div>
     </div>
   );

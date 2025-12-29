@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BackButton } from '../ui/BackButton';
 
 interface CompanyListProps {
   category: string;
@@ -69,9 +70,7 @@ export function CompanyList({ category, onSelectCompany, onBack }: CompanyListPr
       <div className="border-b-2 border-neutral-800">
         <div className="p-4">
           <div className="flex items-center gap-3 mb-4">
-            <button onClick={onBack} className="w-8 h-8 border-2 border-neutral-800 flex items-center justify-center">
-              ←
-            </button>
+            <BackButton onClick={onBack} />
             <h1 className="font-bold flex-1">{category}</h1>
           </div>
 

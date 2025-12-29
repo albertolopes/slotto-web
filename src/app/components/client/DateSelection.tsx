@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BackButton } from '../ui/BackButton';
 
 interface DateSelectionProps {
   onNext: (date: string) => void;
@@ -56,9 +57,7 @@ export function DateSelection({ onNext, onBack }: DateSelectionProps) {
       {/* Header */}
       <div className="border-b-2 border-neutral-800 p-4">
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="w-8 h-8 border-2 border-neutral-800 flex items-center justify-center">
-            ←
-          </button>
+          <BackButton onClick={onBack} />
           <h1 className="font-bold flex-1 text-center">Selecione a Data</h1>
           <div className="w-8"></div>
         </div>

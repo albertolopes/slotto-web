@@ -55,9 +55,9 @@ export function ClientFlow() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Full-bleed Frame */}
-      <div className="w-full min-h-screen bg-white shadow-none overflow-auto flex flex-col">
+    <div className="min-h-full w-full bg-neutral-100 flex flex-col soft-borders">
+      {/* Full-bleed frame — o conteúdo interno ocupa todo o espaço */}
+      <div className="w-full h-full bg-neutral-100 shadow-none overflow-auto flex flex-col">
         {currentScreen === 'login' && (
           <ClientLogin onLogin={handleLogin} onGuestAccess={handleGuestAccess} />
         )}
@@ -67,6 +67,7 @@ export function ClientFlow() {
               updateBookingData({ category });
               setCurrentScreen('company-list');
             }}
+            onBack={() => setCurrentScreen('login')}
           />
         )}
         {currentScreen === 'company-list' && (

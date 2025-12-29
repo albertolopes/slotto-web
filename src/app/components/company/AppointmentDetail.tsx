@@ -1,3 +1,5 @@
+import { BackButton } from '../ui/BackButton';
+
 interface AppointmentDetailProps {
   appointmentId: string | null;
   onBack: () => void;
@@ -25,9 +27,7 @@ export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailPr
       {/* Header */}
       <div className="border-b-2 border-neutral-800 p-6">
         <div className="flex items-center gap-4 mb-4">
-          <button onClick={onBack} className="w-12 h-12 border-2 border-neutral-800 flex items-center justify-center">
-            ←
-          </button>
+          <BackButton onClick={onBack} />
           <h1 className="font-bold flex-1">Detalhes do Agendamento</h1>
           <div className="px-4 py-2 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">CONFIRMADO</div>
         </div>
