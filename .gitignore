@@ -1,0 +1,58 @@
+# Node
+node_modules/
+
+# Next.js build output
+.next/
+out/
+.next-build/
+
+# Vite / build
+dist/
+build/
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Env files
+.env
+.env.*
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+
+# Mac / Windows
+Thumbs.db
+
+# Coverage and caches
+coverage/
+.cache/
+.parcel-cache/
+
+# Misc
+*.tgz
+*.bak
+
+# Local runtime files
+pids
+*.pid
+
+# TypeScript
+*.tsbuildinfo
+
+# Next export
+out/
+
+# Ignore build artifacts from local tools
+dist/
+build/
+
+# Optional: ignore the example workspace if you don't want to commit it
+# exemplo/
+
