@@ -5,14 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24369391-2171-4ce1-ac9c-b1bd451faab0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/components/ui/BackButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OPENAPI_MAPPING.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/client/ClientLayout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/appointments.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/availability.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/categories.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/client.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/companies.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/companyServices.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/notifications.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/reviews.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/staff.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/subscriptions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postcss.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/ClientFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ClientFlow.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/CompanyFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/CompanyFlow.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/BookingConfirmation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/BookingConfirmation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/client/BookingSuccess.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/BookingSuccess.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/ClientDataForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ClientDataForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/client/ClientLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ClientLogin.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/CompanyDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/CompanyDetail.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/CompanyList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/DateSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/DateSelection.tsx" afterDir="false" />
@@ -22,9 +43,11 @@
       <change beforePath="$PROJECT_DIR$/src/app/components/client/StaffSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/StaffSelection.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/TimeSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/TimeSelection.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/company/AppointmentDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/AppointmentDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/company/CompanyLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/CompanyLogin.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/company/CompanySettings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/CompanySettings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/ManualBooking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/ManualBooking.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/SubscriptionManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/SubscriptionManagement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/company/DailyAgenda.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/DailyAgenda.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/tailwind.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/theme.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,8 +55,17 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/home/beto/Documentos/aaa-pessoal/slotto-web" value="37Rul7fWBMKc7QnCqbaiYVvNwVG" />
+    </persistenceIdMap>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -49,8 +81,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "master",
@@ -63,15 +97,15 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/snap/intellij-idea-ultimate/702/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/home/beto/Documentos/aaa-pessoal/slotto-web/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
@@ -83,6 +117,11 @@
       <option name="presentableId" value="Default" />
       <updated>1766878353179</updated>
       <workItem from="1766878354718" duration="2676000" />
+      <workItem from="1767117062970" duration="934000" />
+      <workItem from="1767368023583" duration="1306000" />
+      <workItem from="1767450921293" duration="10000" />
+      <workItem from="1768527741720" duration="1284000" />
+      <workItem from="1769267218554" duration="20625000" />
     </task>
     <servers />
   </component>

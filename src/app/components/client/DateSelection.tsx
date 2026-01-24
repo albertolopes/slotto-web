@@ -1,115 +1,154 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BackButton } from '../ui/BackButton';
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, isBefore, startOfToday, getYear, getMonth, getDate } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { availability as availabilityApi } from '../../services/api';
+import { BookingData } from '../ClientFlow';
 
 interface DateSelectionProps {
-  onNext: (date: string) => void;
+  bookingData: BookingData;
+  onNext: (date: Date) => void;
   onBack: () => void;
 }
 
-export function DateSelection({ onNext, onBack }: DateSelectionProps) {
-  const [selectedDate, setSelectedDate] = useState<number | null>(null);
+export function DateSelection({ bookingData, onNext, onBack }: DateSelectionProps) {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [monthlyAvailability, setMonthlyAvailability] = useState<Record<number, string>>({});
+  const [loading, setLoading] = useState(false);
+  const today = startOfToday();
 
-  const days = [
-    { day: 1, available: true },
-    { day: 2, available: true },
-    { day: 3, available: false },
-    { day: 4, available: true },
-    { day: 5, available: true },
-    { day: 6, available: true },
-    { day: 7, available: false },
-    { day: 8, available: true },
-    { day: 9, available: true },
-    { day: 10, available: false },
-    { day: 11, available: true },
-    { day: 12, available: true },
-    { day: 13, available: true },
-    { day: 14, available: false },
-    { day: 15, available: true },
-    { day: 16, available: true },
-    { day: 17, available: false },
-    { day: 18, available: true },
-    { day: 19, available: true },
-    { day: 20, available: true },
-    { day: 21, available: false },
-    { day: 22, available: true },
-    { day: 23, available: true },
-    { day: 24, available: false },
-    { day: 25, available: true },
-    { day: 26, available: true },
-    { day: 27, available: true },
-    { day: 28, available: false },
-    { day: 29, available: true },
-    { day: 30, available: true },
-  ];
+  const { companyId, serviceId, staffId } = bookingData;
 
-  const handleDateSelect = (day: number) => {
-    setSelectedDate(day);
+  useEffect(() => {
+    if (companyId && serviceId) {
+      setLoading(true);
+      availabilityApi.getMonthAvailability({
+        companyId,
+        year: getYear(currentMonth),
+        month: getMonth(currentMonth) + 1, // API expects 1-12, date-fns gives 0-11
+        serviceId,
+        staffId,
+      })
+      .then(data => {
+        const availabilityMap = (data || []).reduce((acc: Record<number, string>, day: any) => {
+          acc[day.dia] = day.avaiable;
+          return acc;
+        }, {});
+        setMonthlyAvailability(availabilityMap);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to get month availability", err);
+        setLoading(false);
+      });
+    }
+  }, [currentMonth, companyId, serviceId, staffId]);
+
+  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+  const prevMonth = () => {
+    if (!isSameMonth(currentMonth, today)) {
+      setCurrentMonth(subMonths(currentMonth, 1));
+    }
+  };
+
+  const handleDateSelect = (day: Date) => {
+    const dayNumber = getDate(day);
+    const isAvailable = monthlyAvailability[dayNumber] === 'AVAILABLE';
+    if (!isBefore(day, today) && isAvailable) {
+      setSelectedDate(day);
+    }
   };
 
   const handleContinue = () => {
     if (selectedDate) {
-      onNext(`2025-01-${selectedDate.toString().padStart(2, '0')}`);
+      onNext(selectedDate);
     }
   };
 
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(monthStart);
+  const startDate = startOfWeek(monthStart);
+  const endDate = endOfWeek(monthEnd);
+  const days = eachDayOfInterval({ start: startDate, end: endDate });
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-neutral-50">
       {/* Header */}
-      <div className="border-b-2 border-neutral-800 p-4">
+      <div className="bg-white p-4 border-b border-neutral-200">
         <div className="flex items-center gap-3">
-          <BackButton onClick={onBack} />
-          <h1 className="font-bold flex-1 text-center">Selecione a Data</h1>
-          <div className="w-8"></div>
+          {onBack && <BackButton onClick={onBack} />}
+          <div className="flex-1">
+            <h1 className="font-bold text-lg text-center">Selecione a Data</h1>
+          </div>
+          <div className="w-8" /> {/* Spacer */}
         </div>
       </div>
 
       {/* Content */}
       <div className="flex-1 overflow-auto p-4">
-        <div className="mb-4 border-2 border-neutral-800 p-3 text-center">
-          <div className="font-bold">Janeiro 2025</div>
+        {/* Month Navigator */}
+        <div className="flex items-center justify-between mb-4 px-2">
+          <button onClick={prevMonth} disabled={isSameMonth(currentMonth, today)} className="p-2 rounded-full hover:bg-neutral-100 disabled:opacity-30">
+            &lt;
+          </button>
+          <h2 className="font-bold text-lg capitalize">
+            {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}
+          </h2>
+          <button onClick={nextMonth} className="p-2 rounded-full hover:bg-neutral-100">
+            &gt;
+          </button>
         </div>
 
-        {/* Calendar Header */}
-        <div className="grid grid-cols-7 gap-1 mb-2">
-          {['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map((day, index) => (
-            <div key={index} className="text-center font-bold text-sm p-2">
-              {day}
-            </div>
-          ))}
-        </div>
+        {/* Calendar */}
+        <div className="bg-white p-4 rounded-xl border border-neutral-200">
+          {/* Weekday Headers */}
+          <div className="grid grid-cols-7 gap-1 mb-2">
+            {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day) => (
+              <div key={day} className="text-center font-medium text-xs text-neutral-500 p-2">
+                {day}
+              </div>
+            ))}
+          </div>
 
-        {/* Calendar Days */}
-        <div className="grid grid-cols-7 gap-1">
-          {days.map((dayInfo, index) => (
-            <button
-              key={index}
-              onClick={() => dayInfo.available && handleDateSelect(dayInfo.day)}
-              disabled={!dayInfo.available}
-              className={`
-                aspect-square border-2 flex items-center justify-center text-sm
-                ${
-                  !dayInfo.available
-                    ? 'border-neutral-300 bg-neutral-100 text-neutral-400 cursor-not-allowed'
-                    : selectedDate === dayInfo.day
-                    ? 'border-neutral-800 bg-neutral-800 text-white'
-                    : 'border-neutral-800 hover:bg-neutral-200'
-                }
-              `}
-            >
-              {dayInfo.day}
-            </button>
-          ))}
+          {/* Calendar Days */}
+          <div className="grid grid-cols-7 gap-1">
+            {days.map((day) => {
+              const dayNumber = getDate(day);
+              const isDayInPast = isBefore(day, today);
+              const isDaySelected = selectedDate && isSameDay(day, selectedDate);
+              const isDayInCurrentMonth = isSameMonth(day, currentMonth);
+              const isAvailable = monthlyAvailability[dayNumber] === 'AVAILABLE';
+              const isDisabled = isDayInPast || !isDayInCurrentMonth || (isDayInCurrentMonth && !isAvailable && !loading);
+
+              return (
+                <button
+                  key={day.toString()}
+                  onClick={() => handleDateSelect(day)}
+                  disabled={isDisabled}
+                  className={`
+                    h-10 w-10 flex items-center justify-center text-sm rounded-full transition-colors
+                    ${!isDayInCurrentMonth && 'text-neutral-300'}
+                    ${isDisabled && 'text-neutral-300 cursor-not-allowed line-through'}
+                    ${!isDisabled && 'hover:bg-neutral-100'}
+                    ${isDaySelected && !isDisabled && 'bg-neutral-900 text-white hover:bg-neutral-700'}
+                  `}
+                >
+                  {format(day, 'd')}
+                </button>
+              );
+            })}
+          </div>
+          {loading && <div className="text-center text-xs text-neutral-400 pt-2">Carregando disponibilidade...</div>}
         </div>
       </div>
 
       {/* Bottom Button */}
-      <div className="border-t-2 border-neutral-800 p-4">
+      <div className="p-4 bg-neutral-50 border-t border-neutral-200">
         <button
           onClick={handleContinue}
           disabled={!selectedDate}
-          className={`w-full h-12 border-2 border-neutral-800 font-bold ${
-            selectedDate ? 'bg-neutral-800 text-white' : 'bg-neutral-200 text-neutral-400'
-          }`}
+          className="w-full h-12 bg-neutral-900 text-white font-bold rounded-xl hover:bg-neutral-700 transition-colors disabled:bg-neutral-300 disabled:cursor-not-allowed"
         >
           Continuar
         </button>

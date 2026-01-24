@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ClientLogin } from './client/ClientLogin';
 import { ServiceCategorySearch } from './client/ServiceCategorySearch';
 import { CompanyList } from './client/CompanyList';
@@ -11,6 +11,7 @@ import { ClientDataForm } from './client/ClientDataForm';
 import { BookingConfirmation } from './client/BookingConfirmation';
 import { BookingSuccess } from './client/BookingSuccess';
 import { MyBookings } from './client/MyBookings';
+import { ClientLayout } from './client/ClientLayout';
 
 export type ClientScreen =
   | 'login'
@@ -27,132 +28,84 @@ export type ClientScreen =
   | 'my-bookings';
 
 export interface BookingData {
-  category?: string;
+  categoryId?: string;
+  categoryName?: string;
   companyId?: string;
-  service?: string;
-  staff?: string;
-  date?: string;
+  serviceId?: string;
+  serviceName?: string;
+  staffId?: string;
+  staffName?: string;
+  date?: Date;
   time?: string;
   clientName?: string;
   clientPhone?: string;
   clientEmail?: string;
 }
 
-export function ClientFlow() {
+interface ClientFlowProps {
+  onScreenChange?: (screen: ClientScreen) => void;
+}
+
+export function ClientFlow({ onScreenChange }: ClientFlowProps) {
   const [currentScreen, setCurrentScreen] = useState<ClientScreen>('login');
   const [bookingData, setBookingData] = useState<BookingData>({});
 
+  useEffect(() => {
+    if (onScreenChange) {
+      onScreenChange(currentScreen);
+    }
+  }, [currentScreen, onScreenChange]);
+
   const updateBookingData = (data: Partial<BookingData>) => {
-    setBookingData({ ...bookingData, ...data });
+    setBookingData((prev) => ({ ...prev, ...data }));
   };
 
-  const handleLogin = () => {
-    setCurrentScreen('category-search');
+  const navigateTo = (screen: ClientScreen) => {
+    setCurrentScreen(screen);
   };
 
-  const handleGuestAccess = () => {
-    setCurrentScreen('category-search');
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'login':
+        return <ClientLogin onLogin={() => navigateTo('category-search')} onGuestAccess={() => navigateTo('category-search')} />;
+      case 'category-search':
+        return <ServiceCategorySearch onSelectCategory={(category) => { updateBookingData({ categoryId: category.id, categoryName: category.name }); navigateTo('company-list'); }} />;
+      case 'company-list':
+        return <CompanyList categoryId={bookingData.categoryId || ''} categoryName={bookingData.categoryName || ''} onSelectCompany={(companyId) => { updateBookingData({ companyId }); navigateTo('company-detail'); }} onBack={() => navigateTo('category-search')} />;
+      case 'company-detail':
+        return <CompanyDetail companyId={bookingData.companyId || ''} onBookService={() => navigateTo('service')} onBack={() => navigateTo('company-list')} />;
+      case 'service':
+        return <ServiceSelection companyId={bookingData.companyId} onNext={(service) => { updateBookingData({ serviceId: service.id, serviceName: service.name }); navigateTo('staff'); }} onBack={() => navigateTo('company-detail')} />;
+      case 'staff':
+        return <StaffSelection companyId={bookingData.companyId} onNext={(staff) => { updateBookingData({ staffId: staff.id, staffName: staff.name }); navigateTo('date'); }} onBack={() => navigateTo('service')} onSkip={() => navigateTo('date')} />;
+      case 'date':
+        return <DateSelection bookingData={bookingData} onNext={(date) => { updateBookingData({ date }); navigateTo('time'); }} onBack={() => navigateTo('staff')} />;
+      case 'time':
+        return <TimeSelection bookingData={bookingData} onNext={(time) => { updateBookingData({ time }); navigateTo('form'); }} onBack={() => navigateTo('date')} />;
+      case 'form':
+        return <ClientDataForm onNext={(clientData) => { updateBookingData(clientData); navigateTo('confirmation'); }} onBack={() => navigateTo('time')} />;
+      case 'confirmation':
+        return <BookingConfirmation bookingData={bookingData} onConfirm={() => navigateTo('success')} onBack={() => navigateTo('form')} />;
+      case 'success':
+        return <BookingSuccess onViewBookings={() => navigateTo('my-bookings')} onNewBooking={() => { setBookingData({}); navigateTo('service'); }} />;
+      case 'my-bookings':
+        return <MyBookings onBack={() => navigateTo('category-search')} />;
+      default:
+        return <ClientLogin onLogin={() => navigateTo('category-search')} onGuestAccess={() => navigateTo('category-search')} />;
+    }
   };
+  
+  const showLayout = ['category-search', 'company-list', 'my-bookings'].includes(currentScreen);
 
   return (
-    <div className="min-h-full w-full bg-neutral-100 flex flex-col soft-borders">
-      {/* Full-bleed frame — o conteúdo interno ocupa todo o espaço */}
-      <div className="w-full h-full bg-neutral-100 shadow-none overflow-auto flex flex-col">
-        {currentScreen === 'login' && (
-          <ClientLogin onLogin={handleLogin} onGuestAccess={handleGuestAccess} />
-        )}
-        {currentScreen === 'category-search' && (
-          <ServiceCategorySearch
-            onSelectCategory={(category) => {
-              updateBookingData({ category });
-              setCurrentScreen('company-list');
-            }}
-            onBack={() => setCurrentScreen('login')}
-          />
-        )}
-        {currentScreen === 'company-list' && (
-          <CompanyList
-            category={bookingData.category || ''}
-            onSelectCompany={(companyId) => {
-              updateBookingData({ companyId });
-              setCurrentScreen('company-detail');
-            }}
-            onBack={() => setCurrentScreen('category-search')}
-          />
-        )}
-        {currentScreen === 'company-detail' && (
-          <CompanyDetail
-            companyId={bookingData.companyId || ''}
-            onBookService={() => setCurrentScreen('service')}
-            onBack={() => setCurrentScreen('company-list')}
-          />
-        )}
-        {currentScreen === 'service' && (
-          <ServiceSelection
-            onNext={(service) => {
-              updateBookingData({ service });
-              setCurrentScreen('staff');
-            }}
-            onBack={() => setCurrentScreen('company-detail')}
-          />
-        )}
-        {currentScreen === 'staff' && (
-          <StaffSelection
-            onNext={(staff) => {
-              updateBookingData({ staff });
-              setCurrentScreen('date');
-            }}
-            onBack={() => setCurrentScreen('service')}
-            onSkip={() => setCurrentScreen('date')}
-          />
-        )}
-        {currentScreen === 'date' && (
-          <DateSelection
-            onNext={(date) => {
-              updateBookingData({ date });
-              setCurrentScreen('time');
-            }}
-            onBack={() => setCurrentScreen('staff')}
-          />
-        )}
-        {currentScreen === 'time' && (
-          <TimeSelection
-            onNext={(time) => {
-              updateBookingData({ time });
-              setCurrentScreen('form');
-            }}
-            onBack={() => setCurrentScreen('date')}
-          />
-        )}
-        {currentScreen === 'form' && (
-          <ClientDataForm
-            onNext={(clientData) => {
-              updateBookingData(clientData);
-              setCurrentScreen('confirmation');
-            }}
-            onBack={() => setCurrentScreen('time')}
-          />
-        )}
-        {currentScreen === 'confirmation' && (
-          <BookingConfirmation
-            bookingData={bookingData}
-            onConfirm={() => setCurrentScreen('success')}
-            onBack={() => setCurrentScreen('form')}
-          />
-        )}
-        {currentScreen === 'success' && (
-          <BookingSuccess
-            onViewBookings={() => setCurrentScreen('my-bookings')}
-            onNewBooking={() => {
-              setBookingData({});
-              setCurrentScreen('service');
-            }}
-          />
-        )}
-        {currentScreen === 'my-bookings' && (
-          <MyBookings onBack={() => setCurrentScreen('service')} />
-        )}
-      </div>
+    <div className="h-full w-full bg-neutral-100 flex flex-col soft-borders">
+      {showLayout ? (
+        <ClientLayout onNavigate={navigateTo} activeScreen={currentScreen}>
+          {renderScreen()}
+        </ClientLayout>
+      ) : (
+        renderScreen()
+      )}
     </div>
   );
 }

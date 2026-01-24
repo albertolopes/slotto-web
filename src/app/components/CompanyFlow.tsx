@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CompanyLogin } from './company/CompanyLogin';
 import { DailyAgenda } from './company/DailyAgenda';
 import { AppointmentDetail } from './company/AppointmentDetail';
@@ -8,14 +8,28 @@ import { SubscriptionManagement } from './company/SubscriptionManagement';
 
 export type CompanyScreen = 'login' | 'agenda' | 'detail' | 'manual' | 'settings' | 'subscription';
 
-export function CompanyFlow() {
+interface CompanyFlowProps {
+  onScreenChange?: (screen: CompanyScreen) => void;
+}
+
+export function CompanyFlow({ onScreenChange }: CompanyFlowProps) {
   const [currentScreen, setCurrentScreen] = useState<CompanyScreen>('login');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<string | null>(null);
+  // In a real app, this would come from auth context
+  const [companyId, setCompanyId] = useState<string>('uuid-empresa-123'); 
+
+  useEffect(() => {
+    if (onScreenChange) {
+      onScreenChange(currentScreen);
+    }
+  }, [currentScreen, onScreenChange]);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     setCurrentScreen('agenda');
+    // Simulate getting company ID after login
+    setCompanyId('uuid-empresa-123'); 
   };
 
   const handleViewDetail = (appointmentId: string) => {
@@ -49,6 +63,7 @@ export function CompanyFlow() {
             )}
             {currentScreen === 'settings' && (
               <CompanySettings 
+                companyId={companyId}
                 onBack={() => setCurrentScreen('agenda')} 
                 onManageSubscription={() => setCurrentScreen('subscription')}
               />

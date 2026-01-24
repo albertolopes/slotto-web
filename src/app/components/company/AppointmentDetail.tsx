@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import { BackButton } from '../ui/BackButton';
+import { appointments as appointmentsApi } from '../../services/api';
 
 interface AppointmentDetailProps {
   appointmentId: string | null;
@@ -6,21 +8,30 @@ interface AppointmentDetailProps {
 }
 
 export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailProps) {
-  // Mock data
-  const appointment = {
-    id: appointmentId,
-    time: '09:00',
-    date: '27 de Dezembro, 2025',
-    client: 'Maria Silva',
-    phone: '(11) 98765-4321',
-    email: 'maria@email.com',
-    service: 'Corte de Cabelo',
-    duration: '30 min',
-    price: 'R$ 50,00',
-    staff: 'João Silva',
-    status: 'confirmado',
-    notes: 'Cliente preferiu corte curto',
-  };
+  const [appointment, setAppointment] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (appointmentId) {
+      setLoading(true);
+      appointmentsApi.getAppointment(appointmentId)
+        .then((data) => {
+          setAppointment(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error('Failed to load appointment', err);
+          setLoading(false);
+        });
+    }
+  }, [appointmentId]);
+
+  if (loading) return <div className="p-6 text-center">Carregando detalhes...</div>;
+  if (!appointment) return <div className="p-6 text-center">Agendamento não encontrado.</div>;
+
+  const dateObj = new Date(appointment.startTime);
+  const dateStr = dateObj.toLocaleDateString();
+  const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   return (
     <div className="flex flex-col h-full">
@@ -29,7 +40,9 @@ export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailPr
         <div className="flex items-center gap-4 mb-4">
           <BackButton onClick={onBack} />
           <h1 className="font-bold flex-1">Detalhes do Agendamento</h1>
-          <div className="px-4 py-2 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">CONFIRMADO</div>
+          <div className="px-4 py-2 border-2 border-neutral-800 bg-neutral-800 text-white font-bold">
+            {appointment.status || 'CONFIRMADO'}
+          </div>
         </div>
       </div>
 
@@ -42,11 +55,11 @@ export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailPr
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Data</div>
-                <div className="font-bold">{appointment.date}</div>
+                <div className="font-bold">{dateStr}</div>
               </div>
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Horário</div>
-                <div className="font-bold">{appointment.time}</div>
+                <div className="font-bold">{timeStr}</div>
               </div>
             </div>
           </div>
@@ -57,15 +70,15 @@ export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailPr
             <div className="space-y-3">
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Nome</div>
-                <div className="font-bold">{appointment.client}</div>
+                <div className="font-bold">{appointment.customerName}</div>
               </div>
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Telefone</div>
-                <div className="font-bold">{appointment.phone}</div>
+                <div className="font-bold">{appointment.customerPhone}</div>
               </div>
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Email</div>
-                <div className="font-bold">{appointment.email}</div>
+                <div className="font-bold">{appointment.customerEmail || '-'}</div>
               </div>
             </div>
           </div>
@@ -76,20 +89,20 @@ export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailPr
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Serviço</div>
-                <div className="font-bold">{appointment.service}</div>
+                <div className="font-bold">{appointment.serviceName || 'Serviço'}</div>
               </div>
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Duração</div>
-                <div className="font-bold">{appointment.duration}</div>
+                <div className="font-bold">{appointment.durationMinutes ? `${appointment.durationMinutes} min` : '-'}</div>
               </div>
               <div>
                 <div className="text-neutral-600 text-sm mb-1">Valor</div>
-                <div className="font-bold">{appointment.price}</div>
+                <div className="font-bold">{appointment.price ? `R$ ${appointment.price}` : '-'}</div>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t-2 border-neutral-300">
               <div className="text-neutral-600 text-sm mb-1">Profissional</div>
-              <div className="font-bold">{appointment.staff}</div>
+              <div className="font-bold">{appointment.staffName || '-'}</div>
             </div>
           </div>
 
@@ -97,7 +110,7 @@ export function AppointmentDetail({ appointmentId, onBack }: AppointmentDetailPr
           <div className="border-2 border-neutral-800 p-6">
             <div className="font-bold mb-4 pb-4 border-b-2 border-neutral-300">Observações</div>
             <div className="border-2 border-neutral-400 p-4 bg-neutral-50 min-h-[100px]">
-              {appointment.notes}
+              {appointment.notes || 'Nenhuma observação.'}
             </div>
           </div>
 

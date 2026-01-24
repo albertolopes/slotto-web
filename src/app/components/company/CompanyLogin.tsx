@@ -5,68 +5,148 @@ interface CompanyLoginProps {
 }
 
 export function CompanyLogin({ onLogin }: CompanyLoginProps) {
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && password) {
+    if (isLogin && email && password) {
+      onLogin();
+    } else if (!isLogin && email && password && name && phone) {
       onLogin();
     }
   };
 
   return (
-    <div className="min-h-[800px] flex items-center justify-center p-8">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 border-4 border-neutral-800 mx-auto mb-4"></div>
-          <h1 className="font-bold mb-2">Sistema de Agendamentos</h1>
-          <p className="text-neutral-600">Painel da Empresa</p>
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="border-b-2 border-neutral-800 p-4">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-neutral-800 mx-auto mb-3"></div>
+          <h1 className="font-bold">Sistema de Agendamentos</h1>
+          <p className="text-neutral-600 text-sm mt-1">Painel da Empresa</p>
         </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block mb-2 font-bold">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border-2 border-neutral-800 p-3 bg-white"
-              placeholder="empresa@email.com"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-bold">Senha</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border-2 border-neutral-800 p-3 bg-white"
-              placeholder="••••••••"
-            />
-          </div>
-
-          <div className="border-2 border-neutral-400 p-3 bg-neutral-50">
-            <div className="flex gap-2">
-              <div className="w-5 h-5 border-2 border-neutral-800 flex-shrink-0"></div>
-              <div className="text-sm text-neutral-600">Manter-me conectado</div>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full h-12 border-2 border-neutral-800 bg-neutral-800 text-white font-bold"
-          >
-            Entrar
-          </button>
-
-          <div className="text-center">
-            <button type="button" className="text-neutral-600 underline">
-              Esqueci minha senha
+      {/* Content */}
+      <div className="flex-1 overflow-auto p-4 flex items-center justify-center">
+        <div className="w-full max-w-md">
+          {/* Toggle Login/Register */}
+          <div className="grid grid-cols-2 gap-0 border-2 border-neutral-800 mb-6">
+            <button
+              onClick={() => setIsLogin(true)}
+              className={`p-3 font-bold border-r-2 border-neutral-800 ${
+                isLogin ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-800'
+              }`}
+            >
+              Entrar
+            </button>
+            <button
+              onClick={() => setIsLogin(false)}
+              className={`p-3 font-bold ${
+                !isLogin ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-800'
+              }`}
+            >
+              Cadastrar
             </button>
           </div>
-        </form>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {!isLogin && (
+              <div>
+                <label className="block mb-2 font-bold">Nome da Empresa</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full border-2 border-neutral-800 p-3 bg-white"
+                  placeholder="Nome do seu negócio"
+                />
+              </div>
+            )}
+
+            {!isLogin && (
+              <div>
+                <label className="block mb-2 font-bold">Telefone</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full border-2 border-neutral-800 p-3 bg-white"
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="block mb-2 font-bold">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border-2 border-neutral-800 p-3 bg-white"
+                placeholder="empresa@email.com"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-bold">Senha</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border-2 border-neutral-800 p-3 bg-white"
+                placeholder="••••••••"
+              />
+            </div>
+
+            {isLogin && (
+              <div className="border-2 border-neutral-400 p-3 bg-neutral-50">
+                <div className="flex gap-2">
+                  <div className="w-5 h-5 border-2 border-neutral-800 flex-shrink-0"></div>
+                  <div className="text-sm text-neutral-600">Manter-me conectado</div>
+                </div>
+              </div>
+            )}
+
+            {!isLogin && (
+              <div className="border-2 border-neutral-400 p-3 bg-neutral-50">
+                <div className="flex gap-2">
+                  <div className="w-5 h-5 border-2 border-neutral-800 flex-shrink-0"></div>
+                  <div className="text-sm text-neutral-600">
+                    Li e aceito os termos de uso e política de privacidade
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full h-12 border-2 border-neutral-800 bg-neutral-800 text-white font-bold"
+            >
+              {isLogin ? 'Entrar' : 'Criar Conta'}
+            </button>
+
+            {isLogin && (
+              <div className="text-center">
+                <button type="button" className="text-neutral-600 underline text-sm">
+                  Esqueci minha senha
+                </button>
+              </div>
+            )}
+          </form>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="border-t-2 border-neutral-800 p-4 bg-neutral-100">
+        <div className="text-center text-sm text-neutral-600">
+          <p>Gerencie seus agendamentos, clientes e serviços</p>
+          <p>em um só lugar.</p>
+        </div>
       </div>
     </div>
   );
