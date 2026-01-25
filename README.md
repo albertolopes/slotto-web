@@ -1,4 +1,4 @@
-# Slotto — (Documentação do Projeto)
+# Slotto — Low Fidelity Wireframes (Documentação do Projeto)
 
 Este repositório contém a versão front-end (implementação em Next.js / React) dos low-fidelity wireframes do aplicativo Slotto. Este README descreve como o projeto deve ficar quando pronto, a estrutura ideal do repositório, como executar localmente, integração com a API e orientações para deixar a UI responsiva e ocupando 100% da viewport.
 
@@ -28,16 +28,6 @@ Este repositório contém a versão front-end (implementação em Next.js / Reac
 *   `DELETE /api/companies/{id}`: Remover empresa.
 *   `POST /api/companies/{id}/photos`: Upload de foto.
 *   `DELETE /api/companies/{id}/photos/{photoId}`: Remover foto.
-
-**Exemplo de JSON (Empresa com `slug`):**
-```json
-{
-  "id": "uuid-empresa-123",
-  "slug": "barbearia-do-beto",
-  "name": "Barbearia do Beto",
-  // ... resto dos campos
-}
-```
 
 ### 3. Serviços da Empresa (`companyServices.ts`)
 *   `GET /api/companies/{companyId}/services`: Listar serviços da empresa.
@@ -69,8 +59,9 @@ Este repositório contém a versão front-end (implementação em Next.js / Reac
 *   `GET /api/reviews/{id}`: Detalhes da avaliação.
 *   `DELETE /api/reviews/{id}`: Remover avaliação.
 
-### 8. Assinaturas (`subscriptions.ts`)
-*   `GET /api/companies/{companyId}/subscription`: Obter status da assinatura.
+### 8. Planos e Assinaturas (`subscriptions.ts`)
+*   `GET /api/plans`: Listar planos disponíveis.
+*   `GET /api/companies/{companyId}/subscription`: Obter status da assinatura da empresa.
 *   `POST /api/companies/{companyId}/subscription`: Criar/Atualizar assinatura.
 *   `POST /api/subscriptions/webhook`: Webhook para pagamentos.
 

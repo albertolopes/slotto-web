@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { companies as companiesApi } from '../../../services/api';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { ServiceSelection } from '../../../components/client/ServiceSelection';
 import { StaffSelection } from '../../../components/client/StaffSelection';
 import { DateSelection } from '../../../components/client/DateSelection';
@@ -16,20 +15,18 @@ type BookingStep = 'service' | 'staff' | 'date' | 'time' | 'form' | 'confirmatio
 export default function BookingPage() {
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
   const slug = params.slug as string;
+  const companyId = searchParams.get('companyId');
 
   const [step, setStep] = useState<BookingStep>('service');
-  const [company, setCompany] = useState<any>(null);
-  const [bookingData, setBookingData] = useState<any>({});
+  const [bookingData, setBookingData] = useState<any>({ companyId });
 
   useEffect(() => {
-    if (slug) {
-      companiesApi.getCompanyBySlug(slug).then(data => {
-        setCompany(data);
-        setBookingData(prev => ({ ...prev, companyId: data.id }));
-      });
+    if (companyId) {
+      setBookingData(prev => ({ ...prev, companyId }));
     }
-  }, [slug]);
+  }, [companyId]);
 
   const updateBookingData = (data: any) => {
     setBookingData(prev => ({ ...prev, ...data }));
@@ -44,16 +41,16 @@ export default function BookingPage() {
     router.back();
   };
 
-  if (!company) {
-    return <div>Carregando...</div>;
+  if (!companyId) {
+    return <div>Carregando informações da empresa...</div>;
   }
 
   const renderStep = () => {
     switch (step) {
       case 'service':
-        return <ServiceSelection companyId={company.id} onNext={(service) => { updateBookingData({ serviceId: service.id, serviceName: service.name }); nextStep('staff'); }} onBack={handleBack} />;
+        return <ServiceSelection companyId={companyId} onNext={(service) => { updateBookingData({ serviceId: service.id, serviceName: service.name }); nextStep('staff'); }} onBack={handleBack} />;
       case 'staff':
-        return <StaffSelection companyId={company.id} onNext={(staff) => { updateBookingData({ staffId: staff.id, staffName: staff.name }); nextStep('date'); }} onBack={() => nextStep('service')} onSkip={() => nextStep('date')} />;
+        return <StaffSelection companyId={companyId} onNext={(staff) => { updateBookingData({ staffId: staff.id, staffName: staff.name }); nextStep('date'); }} onBack={() => nextStep('service')} onSkip={() => nextStep('date')} />;
       case 'date':
         return <DateSelection bookingData={bookingData} onNext={(date) => { updateBookingData({ date }); nextStep('time'); }} onBack={() => nextStep('staff')} />;
       case 'time':

@@ -37,9 +37,9 @@ export default function CompanyPage() {
 
   return (
     <CompanyDetail 
-      companyId={company.id} // Pass the ID to the component
+      companyId={company.id}
       onBookService={() => {
-        router.push(`/companies/${slug}/book`);
+        router.push(`/companies/${slug}/book?companyId=${company.id}`);
       }}
       onBack={() => router.back()}
     />

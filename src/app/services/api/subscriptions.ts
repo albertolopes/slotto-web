@@ -1,5 +1,9 @@
 import { apiFetch, jsonHeaders } from './client';
 
+export async function listPlans() {
+  return apiFetch('/api/plans');
+}
+
 export async function getSubscription(companyId: string) {
   return apiFetch(`/api/companies/${companyId}/subscription`);
 }
