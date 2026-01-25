@@ -1,4 +1,4 @@
-# Slotto — Low Fidelity Wireframes (Documentação do Projeto)
+# Slotto — (Documentação do Projeto)
 
 Este repositório contém a versão front-end (implementação em Next.js / React) dos low-fidelity wireframes do aplicativo Slotto. Este README descreve como o projeto deve ficar quando pronto, a estrutura ideal do repositório, como executar localmente, integração com a API e orientações para deixar a UI responsiva e ocupando 100% da viewport.
 
@@ -21,12 +21,23 @@ Este repositório contém a versão front-end (implementação em Next.js / Reac
 
 ### 2. Empresas (`companies.ts`)
 *   `GET /api/companies`: Listar empresas.
-*   `GET /api/companies/{id}`: Detalhes da empresa.
+*   `GET /api/companies/{id}`: Detalhes da empresa por ID.
+*   `GET /api/companies/slug/{slug}`: Detalhes da empresa por slug.
 *   `POST /api/companies`: Criar empresa.
 *   `PUT /api/companies/{id}`: Atualizar empresa.
 *   `DELETE /api/companies/{id}`: Remover empresa.
 *   `POST /api/companies/{id}/photos`: Upload de foto.
 *   `DELETE /api/companies/{id}/photos/{photoId}`: Remover foto.
+
+**Exemplo de JSON (Empresa com `slug`):**
+```json
+{
+  "id": "uuid-empresa-123",
+  "slug": "barbearia-do-beto",
+  "name": "Barbearia do Beto",
+  // ... resto dos campos
+}
+```
 
 ### 3. Serviços da Empresa (`companyServices.ts`)
 *   `GET /api/companies/{companyId}/services`: Listar serviços da empresa.
@@ -42,11 +53,7 @@ Este repositório contém a versão front-end (implementação em Next.js / Reac
 
 ### 5. Disponibilidade (`availability.ts`)
 *   `GET /api/availability/month`: Obter disponibilidade para um mês inteiro.
-    *   **Query Params**: `companyId`, `year`, `month`, `serviceId`, `staffId` (opcional).
-    *   **Resposta Esperada**: Um array de objetos, ex: `[{"dia": 1, "avaiable": "AVAILABLE"}, {"dia": 2, "avaiable": "UNAVAILABLE"}]`.
 *   `GET /api/availability`: Obter horários disponíveis para um dia específico.
-    *   **Query Params**: `companyId`, `date` (YYYY-MM-DD), `serviceId`, `staffId` (opcional).
-    *   **Resposta Esperada**: Uma lista de strings com os horários, ex: `["09:00", "10:30"]`.
 
 ### 6. Agendamentos (`appointments.ts`)
 *   `GET /api/appointments`: Listar agendamentos.

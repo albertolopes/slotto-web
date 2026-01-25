@@ -2,8 +2,8 @@ import '../styles/index.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Low Fidelity Wireframes',
-  description: 'Sistema de Agendamentos',
+  title: 'Slotto - Agendamentos',
+  description: 'Sistema de Agendamentos para pequenas empresas',
 };
 
 export default function RootLayout({
@@ -12,8 +12,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="pt-BR">
+      <body>
+        <main className="min-h-screen bg-neutral-50">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

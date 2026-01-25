@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { BackButton } from '../ui/BackButton';
 import * as categoriesApi from '../../services/api/categories';
 
 interface ServiceCategorySearchProps {
@@ -29,7 +28,7 @@ export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearc
   );
 
   return (
-    <>
+    <div className="flex flex-col h-full bg-neutral-50">
       {/* Header */}
       <div className="bg-white px-6 pt-6 pb-4 shadow-sm sticky top-0 z-10">
         <div className="flex items-center justify-between mb-6">
@@ -60,7 +59,7 @@ export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearc
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="flex-1 overflow-auto p-6 pb-24">
         {!searchTerm && (
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold text-lg text-neutral-900">Categorias</h2>
@@ -101,6 +100,6 @@ export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearc
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

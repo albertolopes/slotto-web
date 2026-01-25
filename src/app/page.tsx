@@ -1,7 +1,18 @@
 'use client';
 
-import App from './App';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function Page() {
-  return <App />;
+export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/search');
+  }, [router]);
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <p>Redirecionando...</p>
+    </div>
+  );
 }

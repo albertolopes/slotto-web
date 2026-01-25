@@ -5,50 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24369391-2171-4ce1-ac9c-b1bd451faab0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OPENAPI_MAPPING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/components/client/ClientLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/appointments.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/availability.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/categories.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/companies.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/companyServices.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/notifications.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/reviews.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/staff.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/api/subscriptions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/companies/[slug]/book/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/companies/[slug]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/client/BookingDetail.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/client/Profile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/my-bookings/[id]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/my-bookings/[id]/reschedule/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/my-bookings/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/profile/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/search/[categoryId]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/search/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postcss.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/ClientFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ClientFlow.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/CompanyFlow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/CompanyFlow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/BookingConfirmation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/BookingConfirmation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/BookingSuccess.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/BookingSuccess.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/ClientDataForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ClientDataForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/ClientLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ClientLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/CompanyDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/CompanyDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/client/ClientLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ClientLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/CompanyList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/DateSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/DateSelection.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/MyBookings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/MyBookings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/client/ServiceCategorySearch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ServiceCategorySearch.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/ServiceSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ServiceSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/StaffSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/StaffSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/client/TimeSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/TimeSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/AppointmentDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/AppointmentDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/CompanyLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/CompanyLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/CompanySettings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/CompanySettings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/DailyAgenda.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/DailyAgenda.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/tailwind.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ui/BackButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ui/BackButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/api/companies.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/api/companies.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +101,7 @@
       <workItem from="1767368023583" duration="1306000" />
       <workItem from="1767450921293" duration="10000" />
       <workItem from="1768527741720" duration="1284000" />
-      <workItem from="1769267218554" duration="20625000" />
+      <workItem from="1769267218554" duration="28381000" />
     </task>
     <servers />
   </component>

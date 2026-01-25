@@ -8,6 +8,10 @@ export async function getCompany(id: string) {
   return apiFetch(`/api/companies/${id}`);
 }
 
+export async function getCompanyBySlug(slug: string) {
+  return apiFetch(`/api/companies/slug/${slug}`);
+}
+
 export async function createCompany(body: any) {
   return apiFetch(`/api/companies`, {
     method: 'POST',
@@ -32,7 +36,6 @@ export async function uploadCompanyPhoto(id: string, formData: FormData) {
   return apiFetch(`/api/companies/${id}/photos`, {
     method: 'POST',
     body: formData,
-    // Note: Do not set Content-Type header manually for FormData, fetch does it automatically with boundary
   });
 }
 

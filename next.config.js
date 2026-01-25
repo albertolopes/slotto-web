@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Se você estiver usando o diretório `app` (recomendado para novos projetos Next.js)
-  // experimental: {
-  //   appDir: true,
-  // },
+  async rewrites() {
+    return [
+      {
+        source: '/:slug((?!search|my-bookings|login|companies).*)', // Exclude known routes
+        destination: '/companies/:slug',
+      },
+    ]
+  },
 }
 
 export default nextConfig;

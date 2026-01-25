@@ -1,10 +1,10 @@
 import { BackButton } from '../ui/BackButton';
 import { useEffect, useState } from 'react';
 import { appointments as appointmentsApi, reviews as reviewsApi } from '../../services/api';
-
-interface MyBookingsProps {
-  onBack: () => void;
-}
+import { useRouter } from 'next/navigation';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import Link from 'next/link';
 
 function ReviewModal({ companyId, appointmentId, onClose, onSubmit }: { companyId: string, appointmentId: string, onClose: () => void, onSubmit: (review: any) => void }) {
   const [rating, setRating] = useState(0);
@@ -59,11 +59,12 @@ function ReviewModal({ companyId, appointmentId, onClose, onSubmit }: { companyI
   );
 }
 
-export function MyBookings({ onBack }: MyBookingsProps) {
+export function MyBookings() {
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reviewingAppointment, setReviewingAppointment] = useState<any | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
@@ -80,68 +81,90 @@ export function MyBookings({ onBack }: MyBookingsProps) {
   }, []);
 
   const handleNewReview = () => {
-    // Optionally refetch appointments to update their status
     setReviewingAppointment(null);
+    setLoading(true);
+    appointmentsApi.listAppointments().then(data => {
+      setAppointments(data || []);
+      setLoading(false);
+    });
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="border-b p-4 border-neutral-200 bg-white">
+      <div className="bg-white border-b p-4 border-neutral-200 sticky top-0 z-10">
         <div className="flex items-center gap-3">
-          <BackButton onClick={onBack} />
-          <h1 className="font-bold flex-1 text-center">Meus Agendamentos</h1>
+          <BackButton onClick={() => router.back()} />
+          <h1 className="font-bold flex-1 text-center text-lg">Meus Agendamentos</h1>
           <div className="w-8" />
         </div>
       </div>
 
       {/* Content */}
       <div className="flex-1 overflow-auto p-4">
-        <div className="space-y-3">
-          {loading && <div className="text-center text-neutral-600">Carregando...</div>}
-          {error && <div className="text-center text-red-600">{error}</div>}
+        <div className="space-y-4">
+          {loading && <div className="text-center text-neutral-500 py-8">Carregando...</div>}
+          {error && <div className="text-center text-red-500 py-8">{error}</div>}
 
-          {appointments.map((apt) => (
-            <div key={apt.id} className="border p-4 border-neutral-200 rounded bg-white shadow-sm">
-              <div className="flex justify-between items-start mb-2">
-                <div className="font-bold text-lg">{apt.serviceName || 'Serviço'}</div>
-                <div className="text-sm font-bold bg-neutral-100 px-2 py-1 rounded">{apt.status || 'PENDING'}</div>
-              </div>
-
-              <div className="space-y-1 text-sm text-neutral-700">
-                <div className="flex gap-2">
-                  <span className="text-neutral-500">Data:</span>
-                  <span className="font-medium">{new Date(apt.startTime).toLocaleString()}</span>
+          {!loading && appointments.map((apt) => {
+            const appointmentDate = new Date(apt.startTime);
+            const isCompleted = apt.status === 'COMPLETED';
+            
+            return (
+              <div key={apt.id} className="bg-white border border-neutral-200 rounded-xl shadow-sm p-4 space-y-3">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <div className="font-bold text-lg text-neutral-900">{apt.service?.name || 'Serviço'}</div>
+                    <div className="text-sm text-neutral-600 font-medium">{apt.company?.name || 'Empresa'}</div>
+                  </div>
+                  <div className={`text-xs font-bold px-2 py-1 rounded-full ${
+                    isCompleted ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                  }`}>
+                    {apt.status || 'PENDENTE'}
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <span className="text-neutral-500">Empresa:</span>
-                  <span className="font-medium">{apt.companyName || 'Empresa'}</span>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-neutral-600">
+                    <span className="font-medium">Data</span>
+                    <span className="font-bold text-neutral-800">{format(appointmentDate, "dd/MM/yyyy")}</span>
+                  </div>
+                  <div className="flex justify-between text-neutral-600">
+                    <span className="font-medium">Hora</span>
+                    <span className="font-bold text-neutral-800">{format(appointmentDate, "HH:mm")}</span>
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  {isCompleted && (
+                    <button 
+                      onClick={() => setReviewingAppointment(apt)}
+                      className="flex-1 h-10 border border-blue-200 text-blue-700 font-bold text-sm bg-blue-50 hover:bg-blue-100 rounded-lg"
+                    >
+                      Avaliar
+                    </button>
+                  )}
+                  <Link href={`/my-bookings/${apt.id}`} legacyBehavior>
+                    <a className="flex-1 h-10 flex items-center justify-center border border-neutral-200 font-bold text-sm bg-neutral-50 hover:bg-neutral-100 rounded-lg">
+                      Detalhes
+                    </a>
+                  </Link>
                 </div>
               </div>
+            );
+          })}
 
-              <div className="mt-3 pt-3 border-t border-neutral-100 flex gap-2">
-                {apt.status === 'COMPLETED' && (
-                  <button 
-                    onClick={() => setReviewingAppointment(apt)}
-                    className="flex-1 h-10 border px-3 py-2 border-blue-200 text-blue-700 font-bold text-sm bg-blue-50 hover:bg-blue-100"
-                  >
-                    Avaliar
-                  </button>
-                )}
-                <button className="flex-1 h-10 border px-3 py-2 border-neutral-200 font-bold text-sm bg-neutral-50 hover:bg-neutral-100">
-                  Detalhes
-                </button>
-              </div>
+          {!loading && appointments.length === 0 && (
+            <div className="text-center py-12 text-neutral-500">
+              <p>Nenhum agendamento encontrado.</p>
             </div>
-          ))}
-
-          {!loading && appointments.length === 0 && <div className="text-center text-neutral-600">Nenhum agendamento encontrado.</div>}
+          )}
         </div>
       </div>
 
       {reviewingAppointment && (
         <ReviewModal
-          companyId={reviewingAppointment.companyId}
+          companyId={reviewingAppointment.company.id}
           appointmentId={reviewingAppointment.id}
           onClose={() => setReviewingAppointment(null)}
           onSubmit={handleNewReview}

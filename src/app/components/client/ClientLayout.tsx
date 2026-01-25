@@ -1,13 +1,16 @@
+'use client';
+
 import React from 'react';
-import { ClientScreen } from '../ClientFlow';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
-  onNavigate: (screen: ClientScreen) => void;
-  activeScreen: ClientScreen;
 }
 
-export function ClientLayout({ children, onNavigate, activeScreen }: ClientLayoutProps) {
+export function ClientLayout({ children }: ClientLayoutProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <div className="flex flex-col h-full bg-neutral-50 relative">
       {/* Scrollable Content Area */}
@@ -17,10 +20,10 @@ export function ClientLayout({ children, onNavigate, activeScreen }: ClientLayou
 
       {/* Bottom Navigation - Fixed */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 px-6 py-3 safe-area-bottom z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <div className="flex justify-around items-center">
+        <div className="flex justify-around items-center max-w-md mx-auto">
           <button 
-            onClick={() => onNavigate('category-search')} 
-            className={`flex flex-col items-center gap-1 transition-colors ${activeScreen === 'category-search' ? 'text-neutral-900' : 'text-neutral-400 hover:text-neutral-600'}`}
+            onClick={() => router.push('/search')} 
+            className={`flex flex-col items-center gap-1 transition-colors ${pathname.startsWith('/search') ? 'text-neutral-900' : 'text-neutral-400 hover:text-neutral-600'}`}
           >
             <div className="w-6 h-6 flex items-center justify-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -32,8 +35,8 @@ export function ClientLayout({ children, onNavigate, activeScreen }: ClientLayou
           </button>
           
           <button 
-            onClick={() => onNavigate('my-bookings')} 
-            className={`flex flex-col items-center gap-1 transition-colors ${activeScreen === 'my-bookings' ? 'text-neutral-900' : 'text-neutral-400 hover:text-neutral-600'}`}
+            onClick={() => router.push('/my-bookings')} 
+            className={`flex flex-col items-center gap-1 transition-colors ${pathname.startsWith('/my-bookings') ? 'text-neutral-900' : 'text-neutral-400 hover:text-neutral-600'}`}
           >
             <div className="w-6 h-6 flex items-center justify-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -46,7 +49,10 @@ export function ClientLayout({ children, onNavigate, activeScreen }: ClientLayou
             <span className="text-[10px] font-medium">Agenda</span>
           </button>
 
-          <button className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-600 transition-colors">
+          <button 
+            onClick={() => router.push('/profile')}
+            className={`flex flex-col items-center gap-1 transition-colors ${pathname.startsWith('/profile') ? 'text-neutral-900' : 'text-neutral-400 hover:text-neutral-600'}`}
+          >
             <div className="w-6 h-6 flex items-center justify-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
