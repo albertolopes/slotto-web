@@ -23,7 +23,7 @@ export function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-50 p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
           <div className="w-20 h-20 border-4 border-neutral-800 mx-auto mb-4 rounded-lg"></div>
           <h1 className="text-2xl font-bold">Slotto</h1>

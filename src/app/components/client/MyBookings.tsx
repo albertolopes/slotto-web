@@ -1,10 +1,12 @@
 import { BackButton } from '../ui/BackButton';
 import { useEffect, useState } from 'react';
-import { appointments as appointmentsApi, reviews as reviewsApi } from '../../services/api';
+import { appointments as appointmentsApi, reviews as reviewsApi, ads as adsApi } from '../../services/api';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import Link from 'next/link';
+import { intersperseAds } from '../../lib/utils';
+import { AdCard } from '../ads/AdCard';
 
 function ReviewModal({ companyId, appointmentId, onClose, onSubmit }: { companyId: string, appointmentId: string, onClose: () => void, onSubmit: (review: any) => void }) {
   const [rating, setRating] = useState(0);
@@ -61,23 +63,26 @@ function ReviewModal({ companyId, appointmentId, onClose, onSubmit }: { companyI
 
 export function MyBookings() {
   const [appointments, setAppointments] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [ads, setAds] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reviewingAppointment, setReviewingAppointment] = useState<any | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
-    appointmentsApi.listAppointments()
-      .then((data) => {
-        setAppointments(data || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to load appointments', err);
-        setError('Erro ao carregar agendamentos');
-        setLoading(false);
-      });
+    Promise.all([
+      appointmentsApi.listAppointments(),
+      adsApi.getAds('my-bookings'), // Pass placement
+    ]).then(([appointmentsData, adsData]) => {
+      setAppointments(appointmentsData || []);
+      setAds(adsData || []);
+      setLoading(false);
+    }).catch(err => {
+      console.error("Failed to load page data", err);
+      setError('Erro ao carregar agendamentos');
+      setLoading(false);
+    });
   }, []);
 
   const handleNewReview = () => {
@@ -89,9 +94,10 @@ export function MyBookings() {
     });
   };
 
+  const itemsWithAds = intersperseAds(appointments, ads, 2);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-white border-b p-4 border-neutral-200 sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <BackButton onClick={() => router.back()} />
@@ -100,13 +106,17 @@ export function MyBookings() {
         </div>
       </div>
 
-      {/* Content */}
       <div className="flex-1 overflow-auto p-4">
         <div className="space-y-4">
           {loading && <div className="text-center text-neutral-500 py-8">Carregando...</div>}
           {error && <div className="text-center text-red-500 py-8">{error}</div>}
 
-          {!loading && appointments.map((apt) => {
+          {!loading && itemsWithAds.map((item, index) => {
+            if (item.type === 'ad') {
+              return <AdCard key={`ad-${item.data.id}-${index}`} ad={item.data} fullWidth={true} />;
+            }
+            
+            const apt = item.data;
             const appointmentDate = new Date(apt.startTime);
             const isCompleted = apt.status === 'COMPLETED';
             
@@ -154,7 +164,7 @@ export function MyBookings() {
             );
           })}
 
-          {!loading && appointments.length === 0 && (
+          {!loading && itemsWithAds.length === 0 && (
             <div className="text-center py-12 text-neutral-500">
               <p>Nenhum agendamento encontrado.</p>
             </div>

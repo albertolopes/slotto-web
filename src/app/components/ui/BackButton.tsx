@@ -1,7 +1,14 @@
 interface BackButtonProps {
-  onClick: () => void
+  /**
+   * Função a ser executada quando o botão é clicado.
+   */
+  onClick: () => void;
 }
 
+/**
+ * Um botão de voltar padronizado com ícone, usado para navegação.
+ * Possui um fundo branco para garantir visibilidade em qualquer imagem.
+ */
 export function BackButton({ onClick }: BackButtonProps) {
   return (
     <button

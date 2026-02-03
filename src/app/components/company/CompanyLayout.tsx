@@ -61,7 +61,7 @@ export function CompanyLayout({ children }: CompanyLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-neutral-50">
+    <div className="flex min-h-screen w-screen bg-neutral-50">
       {/* Desktop Sidebar */}
       <div className="hidden md:flex w-64 flex-shrink-0 border-r border-neutral-200">
         <SidebarContent />

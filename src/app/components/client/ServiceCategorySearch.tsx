@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import * as categoriesApi from '../../services/api/categories';
+import * as adsApi from '../../services/api/ads';
+import { intersperseAds } from '../../lib/utils';
+import { AdCard } from '../ads/AdCard';
 
 interface ServiceCategorySearchProps {
   onSelectCategory: (category: { id: string; name: string }) => void;
@@ -8,24 +11,29 @@ interface ServiceCategorySearchProps {
 export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [ads, setAds] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    categoriesApi.listCategories()
-      .then((data) => {
-        setCategories(data || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to load categories', err);
-        setLoading(false);
-      });
+    Promise.all([
+      categoriesApi.listCategories(),
+      adsApi.getAds('category-search'), // Pass placement
+    ]).then(([categoriesData, adsData]) => {
+      setCategories(categoriesData || []);
+      setAds(adsData || []);
+      setLoading(false);
+    }).catch(err => {
+      console.error("Failed to load page data", err);
+      setLoading(false);
+    });
   }, []);
 
   const filteredCategories = categories.filter(cat => 
     cat.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const itemsWithAds = intersperseAds(filteredCategories, ads, 4);
 
   return (
     <div className="flex flex-col h-full bg-neutral-50">
@@ -59,7 +67,7 @@ export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearc
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto p-6 pb-24">
+      <div className="flex-1 overflow-auto p-6">
         {!searchTerm && (
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold text-lg text-neutral-900">Categorias</h2>
@@ -68,29 +76,35 @@ export function ServiceCategorySearch({ onSelectCategory }: ServiceCategorySearc
 
         {loading ? (
           <div className="grid grid-cols-2 gap-4">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
+            {[...Array(8)].map((_, i) => (
               <div key={i} className="h-32 bg-white rounded-2xl animate-pulse border border-neutral-100"></div>
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-4">
-            {filteredCategories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => onSelectCategory({ id: category.id, name: category.name })}
-                className="group relative bg-white p-5 rounded-2xl border border-neutral-100 shadow-sm hover:shadow-md hover:border-neutral-200 transition-all duration-200 flex flex-col items-center justify-center text-center h-36 active:scale-95"
-              >
-                <div className="w-12 h-12 mb-3 rounded-full bg-neutral-50 flex items-center justify-center text-2xl group-hover:bg-neutral-100 group-hover:scale-110 transition-all duration-300">
-                  {category.icon}
-                </div>
-                <div className="font-bold text-neutral-900 mb-1 group-hover:text-black">{category.name}</div>
-                <div className="text-xs font-medium text-neutral-400 group-hover:text-neutral-500">
-                  {category.companyCount !== undefined ? `${category.companyCount} locais` : 'Vários locais'}
-                </div>
-              </button>
-            ))}
+            {itemsWithAds.map((item, index) => {
+              if (item.type === 'ad') {
+                return <AdCard key={`ad-${item.data.id}-${index}`} ad={item.data} />;
+              }
+              const category = item.data;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => onSelectCategory({ id: category.id, name: category.name })}
+                  className="group relative bg-white p-5 rounded-2xl border border-neutral-100 shadow-sm hover:shadow-md hover:border-neutral-200 transition-all duration-200 flex flex-col items-center justify-center text-center h-36 active:scale-95"
+                >
+                  <div className="w-12 h-12 mb-3 rounded-full bg-neutral-50 flex items-center justify-center text-2xl group-hover:bg-neutral-100 group-hover:scale-110 transition-all duration-300">
+                    {category.icon}
+                  </div>
+                  <div className="font-bold text-neutral-900 mb-1 group-hover:text-black">{category.name}</div>
+                  <div className="text-xs font-medium text-neutral-400 group-hover:text-neutral-500">
+                    {category.companyCount !== undefined ? `${category.companyCount} locais` : 'Vários locais'}
+                  </div>
+                </button>
+              );
+            })}
             
-            {filteredCategories.length === 0 && !loading && (
+            {itemsWithAds.length === 0 && !loading && (
               <div className="col-span-2 py-12 text-center">
                 <div className="text-4xl mb-3">🔍</div>
                 <p className="text-neutral-900 font-medium">Nenhum resultado encontrado</p>

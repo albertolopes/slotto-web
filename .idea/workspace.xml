@@ -5,21 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24369391-2171-4ce1-ac9c-b1bd451faab0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/company/agenda/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/company/dashboard/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/company/subscription/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/components/company/AgendaView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/components/company/CompanyLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/components/company/Dashboard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/components/unified/Login.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/login/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.storybook/main.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.storybook/preview.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/.placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/ads/AdCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/ui/BackButton.stories.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/lib/utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/api/ads.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/companies/[slug]/book/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/companies/[slug]/book/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/companies/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/companies/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/company/SubscriptionManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/company/SubscriptionManagement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/api/subscriptions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/api/subscriptions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/client/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/CompanyList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/client/MyBookings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/MyBookings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/client/ServiceCategorySearch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/client/ServiceCategorySearch.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ui/BackButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ui/BackButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/api/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,29 +51,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "master",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/beto/Documentos/aaa-pessoal/slotto-web",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/home/beto/Documentos/aaa-pessoal/slotto-web/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/beto/Documentos/aaa-pessoal/slotto-web&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Debug&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/beto/Documentos/aaa-pessoal/slotto-web/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager" selected="npm.Next.js: server-side">
+    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="Next.js: server-side" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -92,7 +112,12 @@
       <workItem from="1767368023583" duration="1306000" />
       <workItem from="1767450921293" duration="10000" />
       <workItem from="1768527741720" duration="1284000" />
-      <workItem from="1769267218554" duration="30763000" />
+      <workItem from="1769267218554" duration="31538000" />
+      <workItem from="1769341967199" duration="194000" />
+      <workItem from="1769536047882" duration="667000" />
+      <workItem from="1769540059267" duration="10000" />
+      <workItem from="1769785649066" duration="6123000" />
+      <workItem from="1770057969252" duration="1585000" />
     </task>
     <servers />
   </component>

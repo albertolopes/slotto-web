@@ -7,4 +7,5 @@ export * as companyServices from './companyServices';
 export * as reviews from './reviews';
 export * as categories from './categories';
 export * as availability from './availability';
+export * as ads from './ads';
 export * from './client';
